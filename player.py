@@ -33,6 +33,11 @@ class Player:
         """Get the direction that the player is facing."""
         return self.__facingDirection
 
+    @property
+    def facingDirectionName(self):
+        """Get the name of the direction that the player is facing."""
+        return Direction.getName(self.facingDirection)
+
     def turnLeft(self):
         """Make the player face to the direction to the left."""
         if self.__facingDirection == 0:
