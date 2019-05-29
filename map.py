@@ -99,7 +99,32 @@ class Map:
 
     def getViewableArea(self, originLocation, direction):
         """Get the viewable area from the origin location facing the direction."""
+        viewableDepth = 4
+        viewableWidth = 3
+
         # Initialize the viewable area to be all outside the map
-        viewableArea = [[Map.TILE_OUTSIDE_MAP for x in range(4)] for y in range(4)]
+        viewableArea = [[Map.TILE_OUTSIDE_MAP for x in range(viewableWidth)] for y in range(viewableDepth)]
+
+        originX = originLocation.x
+        originY = originLocation.y
+
+        writeX = None
+        writeY = None
+
+        if direction == Direction.NORTH:
+            writeX = 0
+            writeY = viewableDepth - 1
+
+            for readY in reversed(range(originY - viewableDepth + 1, originY + 1)):
+                if readY < 0:
+                    break
+
+                for readX in range(originX - 1, originX + 2):
+                    if readX in range(0, Map.WIDTH):
+                        # print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
+                        viewableArea[writeY][writeX] = self.__map[readY][readX]
+                    writeX += 1
+                writeY -= 1
+                writeX = 0
 
         return viewableArea

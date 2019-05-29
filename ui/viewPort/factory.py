@@ -4,7 +4,7 @@ from ..surface import Surface
 from .border import border
 from map import Map
 
-viewableAreaWidth = 4
+viewableAreaWidth = 3
 viewableAreaHeight = 4
 
 def create(viewableArea):
@@ -88,8 +88,9 @@ def create(viewableArea):
 # 30/                                 \
 
 def drawBackLeftSurface(surface, leftTile, leftBackTile):
-    """Draw the back-left surface."""
+    """Draw the back left surface."""
     if leftTile:
+        #            111
         #  0123456789012
         # 0         \
         # 1         |\
@@ -115,6 +116,7 @@ def drawBackLeftSurface(surface, leftTile, leftBackTile):
         surface.drawText(9, 11, "|/")
         surface.plot(9, 12, "/")
     elif leftBackTile:
+        #            111
         #  0123456789012
         # 0         \
         # 1         |
@@ -142,25 +144,69 @@ def drawBackLeftSurface(surface, leftTile, leftBackTile):
             surface.plot(9, y, "|")
         surface.plot(9, 12, "/")
 
+def drawBackCenterSurface(surface, centerTile, centerBackTile):
+    """Draw the back center surface."""
+    if centerTile or not centerBackTile:
+        return
+
+    #            1111111111222
+    #  01234567890123456789012
+    # 0
+    # 1
+    # 2            ___________
+    # 3           |           |
+    # 4           |           |
+    # 5           |           |
+    # 6           |           |
+    # 7           |           |
+    # 8           |           |
+    # 9           |___________|
+    # 10
+    # 11
+    # 12
+    surface.drawText(12, 2, "___________")
+
+    for y in range(3, 9):
+        surface.drawText(11, y, "|           |")
+
+    surface.drawText(11, 9, "|___________|")
+
 def createBackRowSurface(currentRow, backRow):
     """Create the back row surface."""
-    leftBackTile = backRow[0] is Map.TILE_OUTSIDE_MAP
-    centerBackTile = backRow[1] is Map.TILE_OUTSIDE_MAP
-    rightBackTile = backRow[2] is Map.TILE_OUTSIDE_MAP
+    leftBackTile = backRow[0] == Map.TILE_OUTSIDE_MAP
+    centerBackTile = backRow[1] == Map.TILE_OUTSIDE_MAP
+    rightBackTile = backRow[2] == Map.TILE_OUTSIDE_MAP
 
-    leftTile = currentRow[0] is Map.TILE_OUTSIDE_MAP
-    centerTile = currentRow[1] is Map.TILE_OUTSIDE_MAP
-    rightTile = currentRow[2] is Map.TILE_OUTSIDE_MAP
+    leftTile = currentRow[0] == Map.TILE_OUTSIDE_MAP
+    centerTile = currentRow[1] == Map.TILE_OUTSIDE_MAP
+    rightTile = currentRow[2] == Map.TILE_OUTSIDE_MAP
 
     width = 35
     height = 13
 
     surface = Surface(width=width, height=height)
 
-    drawBackLeftSurface(surface=surface, leftTile=leftTile, leftBackTile=leftBackTile)
-    # drawBackMiddleSurface(surface=surface, leftTile=leftTile, leftBackTile=leftBackTile)
+    # print(f"leftTile={leftTile},leftBackTile={leftBackTile}")
+    drawBackLeftSurface(surface, leftTile, leftBackTile)
+    drawBackCenterSurface(surface, centerTile, centerBackTile)
 
     return surface
+
+def dumpViewableArea(viewableArea):
+    """Dump the viewable area for debugging."""
+    y = 0
+    x = 0
+
+    print("+---+")
+    for row in viewableArea:
+        print("|", end="")
+        for ch in row:
+            print("X" if y == 3 and x == 1 else ch, end="")
+            x += 1
+        print("|")
+        y += 1
+        x = 0
+    print("+---+")
 
 def createViewableAreaSurface(viewableArea):
     """Create the viewable area surface."""
@@ -170,9 +216,11 @@ def createViewableAreaSurface(viewableArea):
     if len(viewableArea) != viewableAreaHeight or len(viewableArea[0]) != viewableAreaWidth:
         raise ValueError(f"Viewable area must be {viewableAreaHeight}x{viewableAreaWidth}")
 
+    dumpViewableArea(viewableArea)
+
     surface = Surface(width=35, height=31)
 
-    backRowSurface = createBackRowSurface(viewableArea[2], viewableArea[3])
+    backRowSurface = createBackRowSurface(viewableArea[1], viewableArea[0])
     backRowSurface.drawToSurface(surface, x=0, y=9)
 
     return surface
