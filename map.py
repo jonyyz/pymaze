@@ -151,7 +151,7 @@ class Map:
 
                 for readX in reversed(range(originX - 1, originX + 2)):
                     if readX in range(0, Map.WIDTH):
-                        print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
+                        # print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
                         viewableArea[writeY][writeX] = self.__map[readY][readX]
                     writeX += 1
                 writeY -= 1
