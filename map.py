@@ -126,5 +126,49 @@ class Map:
                     writeX += 1
                 writeY -= 1
                 writeX = 0
+        elif direction == Direction.EAST:
+            writeX = 0
+            writeY = viewableDepth - 1
 
+            for readX in range(originX, originX + viewableDepth):
+                if readX >= Map.WIDTH:
+                    break
+
+                for readY in range(originY - 1, originY + 2):
+                    if readY in range(0, Map.HEIGHT):
+                        # print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
+                        viewableArea[writeY][writeX] = self.__map[readY][readX]
+                    writeX += 1
+                writeY -= 1
+                writeX = 0
+        elif direction == Direction.SOUTH:
+            writeX = 0
+            writeY = viewableDepth - 1
+
+            for readY in range(originY,  originY + viewableDepth):
+                if readY >= Map.HEIGHT:
+                    break
+
+                for readX in reversed(range(originX - 1, originX + 2)):
+                    if readX in range(0, Map.WIDTH):
+                        print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
+                        viewableArea[writeY][writeX] = self.__map[readY][readX]
+                    writeX += 1
+                writeY -= 1
+                writeX = 0
+        elif direction == Direction.WEST:
+            writeX = 0
+            writeY = viewableDepth - 1
+
+            for readX in reversed(range(originX - viewableDepth + 1, originX + 1)):
+                if readX < 0:
+                    break
+
+                for readY in reversed(range(originY - 1, originY + 2)):
+                    if readY in range(0, Map.HEIGHT):
+                        # print(f"readX={readX},readY={readY},writeX={writeX},writeY={writeY}")
+                        viewableArea[writeY][writeX] = self.__map[readY][readX]
+                    writeX += 1
+                writeY -= 1
+                writeX = 0
         return viewableArea
