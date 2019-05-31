@@ -728,48 +728,48 @@ def drawViewableArea(surface, viewableArea):
 
     # Back Row
     if viewableArea[0][0] == Map.TILE_OUTSIDE_MAP:
-        drawBackLeftFrontSurface(surface)
+        drawBackLeftFrontSurface(surface=surface)
         if viewableArea[0][1] != Map.TILE_OUTSIDE_MAP:
-            drawBackLeftRightSurface(surface)
+            drawBackLeftRightSurface(surface=surface)
 
     if viewableArea[0][1] == Map.TILE_OUTSIDE_MAP:
-        drawBackCenterFrontSurface(surface)
+        drawBackCenterFrontSurface(surface=surface)
 
     if viewableArea[0][2] == Map.TILE_OUTSIDE_MAP:
-        drawBackRightFrontSurface(surface)
+        drawBackRightFrontSurface(surface=surface)
         if viewableArea[0][1] != Map.TILE_OUTSIDE_MAP:
-            drawBackRightLeftSurface(surface)
+            drawBackRightLeftSurface(surface=surface)
 
     # Center Row
     if viewableArea[1][0] == Map.TILE_OUTSIDE_MAP:
-        drawCenterLeftFrontSurface(surface)
+        drawCenterLeftFrontSurface(surface=surface)
         if viewableArea[1][1] != Map.TILE_OUTSIDE_MAP:
-            drawCenterLeftRightSurface(surface)
+            drawCenterLeftRightSurface(surface=surface)
 
     if viewableArea[1][1] == Map.TILE_OUTSIDE_MAP:
-        drawCenterCenterFrontSurface(surface)
+        drawCenterCenterFrontSurface(surface=surface)
 
     if viewableArea[1][2] == Map.TILE_OUTSIDE_MAP:
-        drawCenterRightFrontSurface(surface)
+        drawCenterRightFrontSurface(surface=surface)
         if viewableArea[1][1] != Map.TILE_OUTSIDE_MAP:
-            drawCenterRightLeftSurface(surface)
+            drawCenterRightLeftSurface(surface=surface)
 
     # Front Row
     if viewableArea[2][0] == Map.TILE_OUTSIDE_MAP:
-        drawFrontLeftFrontSurface(surface)
+        drawFrontLeftFrontSurface(surface=surface)
         if viewableArea[2][1] != Map.TILE_OUTSIDE_MAP:
-            drawFrontLeftRightSurface(surface)
+            drawFrontLeftRightSurface(surface=surface)
 
     if viewableArea[2][1] == Map.TILE_OUTSIDE_MAP:
-        drawFrontCenterFrontSurface(surface)
+        drawFrontCenterFrontSurface(surface=surface)
 
     if viewableArea[2][2] == Map.TILE_OUTSIDE_MAP:
-        drawFrontRightFrontSurface(surface)
+        drawFrontRightFrontSurface(surface=surface)
         if viewableArea[2][1] != Map.TILE_OUTSIDE_MAP:
-            drawFrontRightLeftSurface(surface)
+            drawFrontRightLeftSurface(surface=surface)
 
     if viewableArea[3][0] == Map.TILE_OUTSIDE_MAP:
-        drawAdjacentLeftRightSurface(surface)
+        drawAdjacentLeftRightSurface(surface=surface)
 
     if viewableArea[3][2] == Map.TILE_OUTSIDE_MAP:
-        drawAdjacentRightLeftSurface(surface)
+        drawAdjacentRightLeftSurface(surface=surface)

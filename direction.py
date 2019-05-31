@@ -15,6 +15,10 @@ class Direction:
 
     @staticmethod
     def getValue(text):
+        """Get the direction value based on the name text."""
+        if not isinstance(text, str):
+            raise TypeError
+
         """Resolve the direction ordinal from the text string."""
         result = list(filter(lambda value: value == text, Direction.DIRECTION_NAMES))
 
@@ -24,12 +28,12 @@ class Direction:
         return result[0]
 
     @staticmethod
-    def getName(direction):
+    def getName(value):
         """Get the name text for the value."""
-        if direction < 0 or direction > Direction.MAX:
+        if value < 0 or value > Direction.MAX:
             return None
 
-        return Direction.DIRECTION_NAMES[direction]
+        return Direction.DIRECTION_NAMES[value]
 
     @staticmethod
     def getOppositeDirection(direction):

@@ -72,7 +72,7 @@ class Map:
     def getDestinationInDirectionFromLocation(
         self,
         originLocation,
-        moveDirection
+        direction
     ):
         """Get the location that is adjacent to the direction's location."""
         originTile = self.__getTileAtCoordinates(originLocation)
@@ -83,17 +83,17 @@ class Map:
         x = originLocation.x
         y = originLocation.y
 
-        if moveDirection == Direction.NORTH:
+        if direction == Direction.NORTH:
             y -= 1
-        elif moveDirection == Direction.EAST:
+        elif direction == Direction.EAST:
             x += 1
-        elif moveDirection == Direction.SOUTH:
+        elif direction == Direction.SOUTH:
             y += 1
-        elif moveDirection == Direction.WEST:
+        elif direction == Direction.WEST:
             x -= 1
 
         destinationLocation = Coordinates(x, y)
-        destinationTile = self.__getTileAtCoordinates(destinationLocation)
+        destinationTile = self.__getTileAtCoordinates(coordinates=destinationLocation)
 
         return None if destinationTile == Map.TILE_OUTSIDE_MAP else destinationLocation
 

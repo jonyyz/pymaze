@@ -28,20 +28,21 @@ class Game:
     def start(self):
         """Start the game loop."""
         firstTime = True
+        self.render(renderHUD=True)
 
         while not self.__quit:
             self.prompt(extraLine=not firstTime)
             firstTime = False
 
-    def writeMessage(self, message):
+    def writeMessage(self, text):
         """Queue a message to be written to the screen."""
-        self.__messages.append(message)
+        self.__messages.append(text)
 
     def getPlayerViewableArea(self):
         """Get the player's viewable area."""
         return self.__map.getViewableArea(
-            self.__player.location,
-            self.__player.facingDirection
+            originLocation=self.__player.location,
+            direction=self.__player.facingDirection
         )
 
     def render(self, renderHUD=False):
@@ -52,7 +53,10 @@ class Game:
             print(f"You are facing {self.__player.facingDirectionName}.")
             print(f"Your location is: {self.__player.location}")
 
-            hud = HUDFactory.create(viewableArea=self.getPlayerViewableArea(), messages=self.__messages)
+            hud = HUDFactory.create(
+                viewableArea=self.getPlayerViewableArea(),
+                messages=self.__messages
+            )
             hud.render()
         else:
             if len(self.__messages) > 0:
@@ -99,7 +103,7 @@ class Game:
                 renderHUD = True
             else:
                 self.writeMessage(
-                    f"I'm sorry I don't understand the command: {inputText}.  Try 'help' if you need help"
+                    text=f"I'm sorry I don't understand the command: {inputText}.  Try 'help' if you need help"
                 )
 
             self.render(renderHUD=renderHUD)
@@ -108,34 +112,34 @@ class Game:
         """Display the help."""
         print("""Python Maze Game
 ----------------
-help    - Display the commands you can use
-quit    - Quit the game
+help       - Display the commands you can use
+quit       - Quit the game
 
-look    - Look at the current room
-forward - Move in the direction the player is facing
-back    - Move in the direction opposite of the one the player is facing
-left    - Turn left
-right   - Turn right""")
+look       - Look at the current room
+forward, f - Move in the direction the player is facing
+back, b    - Move in the direction opposite of the one the player is facing
+left, l    - Turn left
+right, r   - Turn right""")
 
     def movePlayerForward(self):
         """Attempt to move the player forward."""
-        self.movePlayer(self.__player.facingDirection)
+        self.movePlayer(direction=self.__player.facingDirection)
 
     def movePlayerBackward(self):
         """Attempt to move the player backward."""
-        direction = Direction.getOppositeDirection(self.__player.facingDirection)
+        direction = Direction.getOppositeDirection(direction=self.__player.facingDirection)
 
-        self.movePlayer(direction)
+        self.movePlayer(direction=direction)
 
     def movePlayer(self, direction):
         """Attempt to move the player to the destination."""
         destination = self.__map.getDestinationInDirectionFromLocation(
-            self.__player.location,
-            direction
+            originLocation=self.__player.location,
+            direction=direction
         )
 
         if destination is None:
-            self.writeMessage("There's a wall in your way!")
+            self.writeMessage(text="There's a wall in your way!")
         else:
-            self.writeMessage(f"You walk {Direction.getName(direction)}.")
+            self.writeMessage(text=f"You walk {Direction.getName(value=direction)}.")
             self.__player.location = destination

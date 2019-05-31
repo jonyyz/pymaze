@@ -38,7 +38,7 @@ class Surface:
         if not isinstance(x, int) or not isinstance(y, int) or not isinstance(ch, str):
             raise TypeError
 
-        x, y = self.__checkCoordinatesInBounds(x, y)
+        x, y = self.__checkCoordinatesInBounds(x=x, y=y)
 
         if len(ch) == 0:
             raise ValueError
@@ -50,14 +50,14 @@ class Surface:
         if not isinstance(x, int) or not isinstance(y, int) or not isinstance(text, str):
             raise TypeError
 
-        x, y = self.__checkCoordinatesInBounds(x, y)
+        x, y = self.__checkCoordinatesInBounds(x=x, y=y)
 
         if len(text) == 0:
             # Nothing to draw
             return
 
         for ch in text:
-            self.plot(x, y, ch)
+            self.plot(x=x, y=y, ch=ch)
             if horizontal:
                 x += 1
             else:
@@ -65,10 +65,10 @@ class Surface:
 
     def render(self):
         """Render the surface."""
-        rowNumber = 0
+        # rowNumber = 0
         for row in self.__surface:
-            print(f"{rowNumber:<3}", end="")
-            rowNumber += 1
+            # print(f"{rowNumber:<3}", end="")
+            # rowNumber += 1
 
             for col in row:
                 print(chr(32) if col is None else col, end="")
@@ -80,7 +80,7 @@ class Surface:
         if not isinstance(x, int) or not isinstance(y, int) or not isinstance(toSurface, Surface):
             raise TypeError
 
-        drawToX, drawToY = toSurface.__checkCoordinatesInBounds(x, y)
+        drawToX, drawToY = toSurface.__checkCoordinatesInBounds(x=x, y=y)
 
         if drawToX + self.__width > toSurface.width or drawToY + self.__height > toSurface.height:
             raise TypeError(f"The surface to draw is too big to fit into the destination surface at X={x},Y={y}")
@@ -89,8 +89,4 @@ class Surface:
             for sourceX in range(0, self.__width):
                 ch = self.__surface[sourceY][sourceX]
                 if ch is not None:
-                    toSurface.plot(sourceX + drawToX, sourceY + drawToY, ch)
-
-    def clear(self, x1, y1, x2, y2):
-        """Clear a section of the surface."""
-        return
+                    toSurface.plot(x=sourceX + drawToX, y=sourceY + drawToY, ch=ch)

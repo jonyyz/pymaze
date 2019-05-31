@@ -10,9 +10,9 @@ border = Surface(width=width, height=height, initChar=None)
 horizontalBorder = "[<+>]==============[<:>]==============[<+>]"
 verticalBorder = "| |"
 
-border.drawText(0, 0, horizontalBorder)
-border.drawText(0, height - 1, horizontalBorder)
+border.drawText(x=0, y=0, text=horizontalBorder)
+border.drawText(x=0, y=height - 1, text=horizontalBorder)
 
 for y in range(1, height - 1):
-    border.drawText(1, y, verticalBorder)
-    border.drawText(width - 4, y, verticalBorder)
+    border.drawText(x=1, y=y, text=verticalBorder)
+    border.drawText(x=width - 4, y=y, text=verticalBorder)
